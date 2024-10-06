@@ -3,18 +3,21 @@ from .models import Director, Movie, Review
 
 
 class DirectorSerializer(serializers.ModelSerializer):
+    movies_count = serializers.IntegerField()
     class Meta:
         model = Director
-        fields = '__all__'
-
-
-class MovieSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Movie
-        fields = '__all__'
+        fields = 'name movies_count'.split()
 
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = 'text stars'.split()
+
+
+class MovieSerializer(serializers.ModelSerializer):
+    reviews = ReviewSerializer(many=True)
+
+    class Meta:
+        model = Movie
+        fields = 'id title description duration director reviews'.split()

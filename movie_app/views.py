@@ -1,3 +1,4 @@
+from django.db.models import Count
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Director, Movie, Review
@@ -7,7 +8,7 @@ from rest_framework import status
 
 @api_view(http_method_names=['GET'])
 def director_api_view(request):
-    director = Director.objects.all()
+    director = Director.objects.annotate(movies_count=Count('movies')).all()
     data = DirectorSerializer(instance=director, many=True).data
     return Response(data=data)
 
@@ -32,6 +33,11 @@ def movie_api_view(request):
     data = MovieSerializer(instance=movie, many=True).data
     return Response(data=data)
 
+@api_view(http_method_names=['GET'])
+def movies_with_reviews_api_view(request):
+    movies = Movie.objects.prefetch_related('reviews')  # Подгружаем отзывы
+    data = MovieSerializer(instance=movies, many=True).data  # Используем MovieSerializer
+    return Response(data=data)
 
 @api_view(http_method_names=['GET'])
 def movie_detail_api_view(request, id):
