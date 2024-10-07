@@ -35,8 +35,8 @@ def movie_api_view(request):
 
 @api_view(http_method_names=['GET'])
 def movies_with_reviews_api_view(request):
-    movies = Movie.objects.prefetch_related('reviews')  # Подгружаем отзывы
-    data = MovieSerializer(instance=movies, many=True).data  # Используем MovieSerializer
+    movies = Movie.objects.prefetch_related('reviews')
+    data = MovieSerializer(instance=movies, many=True).data
     return Response(data=data)
 
 @api_view(http_method_names=['GET'])
