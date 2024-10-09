@@ -46,7 +46,7 @@ def director_detail_api_view(request, id):
 # ///////////////////////////////////////////////////////////////////////
 
 @api_view(http_method_names=['GET', 'POST'])
-def movie_api_view(request):
+def movie_create_api_view(request):
     if request.method == 'GET':
         movie = Movie.objects.all()
         data = MovieSerializer(instance=movie, many=True).data
@@ -95,7 +95,7 @@ def movie_detail_api_view(request, id):
 # ///////////////////////////////////////////////////////////////////////
 
 @api_view(http_method_names=['GET', 'POST'])
-def review_api_view(request):
+def review_create_api_view(request):
     if request.method == 'GET':
         review = Review.objects.all()
         data = ReviewSerializer(instance=review, many=True).data
