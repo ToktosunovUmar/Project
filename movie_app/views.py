@@ -6,6 +6,8 @@ from .serializer import DirectorSerializer, MovieSerializer, ReviewSerializer, D
 from rest_framework import status
 
 
+
+
 @api_view(http_method_names=['GET', 'POST'])
 def director_create_api_view(request):
     if request.method == 'GET':
