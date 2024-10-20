@@ -35,8 +35,13 @@ class ReviewValidateSerializer(serializers.Serializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    reviews = ReviewSerializer(many=True)
+    class Meta:
+        model = Movie
+        fields = 'id title description duration director'.split()
 
+
+class MovieWithReviewsSerializer(serializers.ModelSerializer):
+    reviews = ReviewSerializer(many=True)
     class Meta:
         model = Movie
         fields = 'id title description duration director reviews'.split()

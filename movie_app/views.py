@@ -3,9 +3,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Director, Movie, Review
 from .serializer import DirectorSerializer, MovieSerializer, ReviewSerializer, DirectorValidateSerializer, \
-    MovieValidateSerializer, ReviewValidateSerializer
+    MovieValidateSerializer, ReviewValidateSerializer, MovieWithReviewsSerializer
 from rest_framework import status
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.pagination import PageNumberPagination
 from collections import OrderedDict
 
@@ -195,9 +195,9 @@ class MovieCreateAPIView(ListCreateAPIView):
     pagination_class = CustomPagination
 
 
-class MovieWithReviewCreateAPIView(ListAPIView):
+class MovieWithReviewCreateAPIView(ListCreateAPIView):
     queryset = Movie.objects.prefetch_related('reviews')
-    serializer_class = MovieSerializer
+    serializer_class = MovieWithReviewsSerializer
     pagination_class = CustomPagination
 
 
